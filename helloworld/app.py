@@ -1,7 +1,11 @@
 from chalice import Chalice
+import logging
+import os
 
 app = Chalice(app_name='helloworld')
-
+# logging setting
+# refer: https://aws.github.io/chalice/topics/logging
+app.log.setLevel(logging.INFO)
 
 @app.route('/')
 def index():
@@ -13,22 +17,35 @@ def index():
 def echo_idol_name(idol_name):
     return {'idol_name': idol_name}
 
-# The view function above will return {"hello": "world"}
-# whenever you make an HTTP GET request to '/'.
-#
-# Here are a few more examples:
-#
-# @app.route('/hello/{name}')
-# def hello_name(name):
-#    # '/hello/james' -> {"hello": "james"}
-#    return {'hello': name}
-#
-# @app.route('/users', methods=['POST'])
-# def create_user():
-#     # This is the JSON body the user sent in their POST request.
-#     user_as_json = app.current_request.json_body
-#     # We'll echo the json body back to the user in a 'user' key.
-#     return {'user': user_as_json}
-#
-# See the README documentation for more examples.
-#
+@app.route('/test', methods=['POST'], name='TweetTest')
+def send_tweet_test():
+    import urllib.request
+    import json
+
+    json_body = app.current_request.json_body
+    app.log.info("received: %s" % json_body)
+
+    webhook_url = os.environ.get('WEBHOOK_URL')
+    method = "POST"
+    headers = {
+        "Content-Type" : "application/json",
+        # User-Agent 指定なしだと怒られるため
+        "User-Agent": "Yumechi WebHook/1.0",
+    }
+
+    # TODO: コンテンツはこの辺を見て増やしたい
+    # https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html
+    values = {'content' : str(json_body)}
+
+
+    # 典型的なリクエスト処理
+    # refer: https://qiita.com/neko_the_shadow/items/324976c7b54623e82b26
+    # refer: https://qiita.com/hoto17296/items/8fcf55cc6cd823a18217
+    json_data = json.dumps(values).encode("utf-8")
+    request = urllib.request.Request(webhook_url, data=json_data, headers=headers)
+    with urllib.request.urlopen(request) as response:
+        response_body = response.read().decode("utf-8")
+        return {
+            'status': 'ok',
+            'res': response.read().decode("utf-8"),
+        }
