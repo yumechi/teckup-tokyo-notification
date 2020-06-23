@@ -1,6 +1,6 @@
 {
-    "text": "<<< {{Text}} >>>",
-    "user_name": "<<< {{UserName}} >>>",
-    "link_to_tweet": "<<< {{LinkToTweet}} >>>",
-    "created_at": "<<< {{CreatedAt}} >>>"
+    "text": "<<<{{Text}}>>>",
+    "user_name": "<<<{{UserName}}>>>",
+    "link_to_tweet": "<<<{{LinkToTweet}}>>>",
+    "created_at": "<<<{{CreatedAt}}>>>"
 }

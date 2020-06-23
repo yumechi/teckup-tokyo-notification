@@ -1,8 +1,8 @@
 {
-    "text": "<<< {{Text}} >>>",
-    "user_name": "<<< {{UserName}} >>>",
-    "user_image_url": "<<< {{UserImageUrl}} >>>",
-    "link_to_tweet": "<<< {{LinkToTweet}} >>>",
-    "created_at": "<<< {{CreatedAt}} >>>",
-    "first_link_url": "<<< {{FirstLinkUrl}} >>>"
+    "text": "<<<{{Text}}>>>",
+    "user_name": "<<<{{UserName}}>>>",
+    "user_image_url": "<<<{{UserImageUrl}}>>>",
+    "link_to_tweet": "<<<{{LinkToTweet}}>>>",
+    "created_at": "<<<{{CreatedAt}}>>>",
+    "first_link_url": "<<<{{FirstLinkUrl}}>>>"
 }
